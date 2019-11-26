@@ -1,0 +1,19 @@
+language: node_js
+branches:
+  only:
+    - master
+cache:
+  yarn: true
+  directories:
+    - node_modules
+install:
+  - yarn install
+  - eval "$(gimme 1.11.1)"
+  - bash ./test_scripts/install_router.sh
+script:
+  - yarn run test
+  - yarn run codecov
+go:
+  - "1.11.x"
+node_js:
+  - "10.13"
