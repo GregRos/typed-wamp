@@ -1,4 +1,4 @@
-import {WampType} from "./message.type";
+import {WampType} from "./message-type";
 import {
     HelloDetails,
     WampCallOptions, WampCancelOptions, WampEventDetails, WampInvocationDetails,

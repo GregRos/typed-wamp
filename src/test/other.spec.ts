@@ -1,7 +1,5 @@
 import test from "ava";
-import {Wamp} from "../lib/wrappers";
-import {WampRaw} from "../lib/raw";
-import {WampType} from "../lib/message.type";
+import {Wamp, WampRaw, WampType} from "../lib";
 
 test("unknown", t => {
     let raw: WampRaw.Unknown = [1999, 51, "test"];

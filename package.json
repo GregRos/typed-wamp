@@ -1,9 +1,9 @@
 {
   "name": "typed-wamp",
-  "version": "0.1.0",
+  "version": "0.1.4-pre",
   "description": "A set of type definitions and convenience classes for working with WAMP messages.",
   "main": "index.js",
-  "repository": "?",
+  "repository": "https://github.com/GregRos/typed-wamp",
   "author": "GregRos",
   "license": "MIT",
   "typings": "index",
@@ -14,9 +14,10 @@
 	"typescript"
   ],
   "scripts": {
-	"test": "node_modules/ava/cli.js",
+	"test": "nyc node_modules/ava/cli.js",
 	"build": "rm -rf dist/ && tsc",
-	"lint": "tslint -p . --fix; (cd src/front && tslint -p . --fix)"
+	"lint": "tslint -p . --fix; (cd src/front && tslint -p . --fix)",
+	"do-publish": "yarn run build && node dist/publish.js && (cd .tmp/publish; yarn publish)"
   },
   "devDependencies": {
 	"@types/lodash": "^4.14.148",
@@ -52,5 +53,7 @@
 	"extension": [
 	  ".ts"
 	]
-  }
+  },
+  "sideEffects": false
+
 }

@@ -1,4 +1,4 @@
-import {WampType} from "./message.type";
+import {WampType} from "./message-type";
 import {
     HelloDetails,
     WampCallOptions,
@@ -31,7 +31,7 @@ export interface WampMessage {
 }
 
 /**
- * Namespace for all WAMP protocol message objects.
+ * Namespace for all WAMP protocol message objects and parsing methods.
  */
 export namespace Wamp {
     /**
@@ -45,9 +45,9 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             let {args, kwargs} = this;
-            return [this.type, this.reqId, this.options || {}, this.procedure, ...argsKwargsArray(args, kwargs)] as WampRaw.Call;
+            return [this.type, this.reqId, this.options, this.procedure, ...argsKwargsArray(args, kwargs)] as WampRaw.Call;
         }
     }
 
@@ -62,7 +62,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.errSourceType, this.errSourceId, this.details, this.error, this.args, this.kwargs] as WampRaw.Error;
         }
     }
@@ -77,7 +77,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.realm, this.details] as WampRaw.Hello;
         }
     }
@@ -92,7 +92,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.details, this.reason] as WampRaw.Abort;
         }
     }
@@ -107,7 +107,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.details, this.reason] as WampRaw.Goodbye;
         }
     }
@@ -123,7 +123,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.options, this.topic, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Publish;
         }
     }
@@ -138,7 +138,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.options, this.topic] as WampRaw.Subscribe;
         }
     }
@@ -153,7 +153,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.subscriptionId] as WampRaw.Unsubscribe;
         }
     }
@@ -168,7 +168,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.options, this.procedure] as WampRaw.Register;
         }
     }
@@ -198,7 +198,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.registrationId] as WampRaw.Unregister;
         }
     }
@@ -214,7 +214,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.invocationReqId, this.options, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Yield;
         }
     }
@@ -229,7 +229,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.WELCOME, this.sessionId, this.details] as WampRaw.Welcome;
         }
     }
@@ -244,7 +244,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.PUBLISHED, this.reqId, this.publicationId] as WampRaw.Published;
         }
     }
@@ -259,7 +259,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.SUBSCRIBED, this.subscribeReqId, this.subscriptionId] as WampRaw.Subscribed;
         }
     }
@@ -274,7 +274,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.UNSUBSCRIBED, this.unsubscribeReqId] as WampRaw.Unsubscribed;
         }
     }
@@ -290,7 +290,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.EVENT, this.subscriptionId, this.publicationId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Event;
         }
     }
@@ -306,7 +306,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.RESULT, this.reqId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Result;
         }
     }
@@ -321,7 +321,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.REGISTERED, this.registerReqId, this.registrationId] as WampRaw.Registered;
         }
     }
@@ -336,7 +336,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.UNREGISTERED, this.unregisterReqId] as WampRaw.Unregistered;
         }
     }
@@ -352,7 +352,7 @@ export namespace Wamp {
             this.kwargs = this.kwargs || {};
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.INVOCATION, this.reqId, this.registrationId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Invocation;
         }
     }
@@ -367,7 +367,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.CHALLENGE, this.authMethod, this.extra] as WampRaw.Challenge;
         }
     }
@@ -382,7 +382,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.reqId, this.options] as WampRaw.Cancel;
         }
     }
@@ -397,7 +397,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [WampType.INTERRUPT, this.invocationReqId, this.options] as WampRaw.Interrupt;
         }
     }
@@ -412,7 +412,7 @@ export namespace Wamp {
 
         }
 
-        toRaw() {
+        toRaw(): WampRaw.Any {
             return [this.type, this.signature, this.extra] as WampRaw.Authenticate;
         }
     }

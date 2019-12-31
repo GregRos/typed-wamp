@@ -1,4 +1,4 @@
-# WAMP Wrapper
+# typed-wamp
 
 This is a package that provides accurate TypeScript type definitions and basic message wrappers for the WAMP protocol.
 

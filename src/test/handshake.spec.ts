@@ -1,9 +1,6 @@
 import test from "ava";
-import {Wamp} from "../lib/wrappers";
-import {WampType} from "../lib/message.type";
-import {HelloDetails, WelcomeDetails} from "../lib/options";
+import {WampType, HelloDetails, WelcomeDetails, WampRaw, Wamp} from "../lib"
 import {detailsObj, detailsObj2} from "./common";
-import {WampRaw} from "../lib/raw";
 
 const helloDetails: HelloDetails = {
     roles: {

@@ -5,12 +5,12 @@ import {
     WampInvocationDetails,
     WampRegisterOptions,
     WampResultDetails,
-    WampYieldOptions
-} from "../lib/options";
-import {Wamp} from "../lib/wrappers";
-import {WampType} from "../lib/message.type";
+    WampYieldOptions,
+    WampRaw,
+    Wamp,
+    WampType,
+} from "../lib";
 import {detailsObj} from "./common";
-import {WampRaw} from "../lib/raw";
 
 const callOptions: WampCallOptions = {
     disclose_me: true,

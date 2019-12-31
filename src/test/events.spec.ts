@@ -1,9 +1,6 @@
-import {WampEventDetails, WampPublishOptions, WampSubscribeOptions} from "../lib/options";
 import test from "ava";
-import {Wamp} from "../lib/wrappers";
-import {WampType} from "../lib/message.type";
+import {Wamp, WampType, WampRaw, WampEventDetails, WampPublishOptions, WampSubscribeOptions} from "../lib";
 import {detailsObj} from "./common";
-import {WampRaw} from "../lib/raw";
 
 const subscribeOptions: WampSubscribeOptions = {
     match: "prefix"
@@ -73,9 +70,6 @@ test("PUBLISH", t => {
     t.deepEqual(publish.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), publish);
 });
-
-test("")
-
 
 test("SUBSCRIBE", t => {
     let subscribe = new Wamp.Subscribe(123, subscribeOptions, "test");
