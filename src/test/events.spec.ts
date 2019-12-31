@@ -71,6 +71,12 @@ test("PUBLISH", t => {
     t.deepEqual(Wamp.parse(raw), publish);
 });
 
+test("PUBLISH - falsy args/kwargs", t => {
+    let publish = new Wamp.Publish(123, pubOptions, "test", null, null);
+    t.deepEqual(publish.args, []);
+    t.deepEqual(publish.kwargs, {});
+});
+
 test("SUBSCRIBE", t => {
     let subscribe = new Wamp.Subscribe(123, subscribeOptions, "test");
     t.is(subscribe.type, WampType.SUBSCRIBE);
@@ -95,3 +101,8 @@ test("EVENT", t => {
     t.deepEqual(Wamp.parse(raw), event);
 });
 
+test("EVENT - falsy args/kwargs", t => {
+    let publish = new Wamp.Event(123, 456, eventDetails)
+    t.deepEqual(publish.args, []);
+    t.deepEqual(publish.kwargs, {});
+});

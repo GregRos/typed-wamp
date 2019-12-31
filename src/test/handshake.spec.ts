@@ -97,5 +97,11 @@ test("ERROR", t => {
     ];
     t.deepEqual(err.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), err);
+});
 
+test("ERROR - normalize empty", t => {
+    let err = new Wamp.Error(WampType.SUBSCRIBE, 123, detailsObj, "test");
+    t.deepEqual(err.args, []);
+    t.deepEqual(err.kwargs, {});
+    t.deepEqual(err.toRaw(), [WampType.ERROR, WampType.SUBSCRIBE, 123, detailsObj, "test");
 });

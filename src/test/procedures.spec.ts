@@ -1,14 +1,14 @@
 import test from "ava";
 import {
+    Wamp,
     WampCallOptions,
     WampCancelOptions,
     WampInvocationDetails,
+    WampRaw,
     WampRegisterOptions,
     WampResultDetails,
-    WampYieldOptions,
-    WampRaw,
-    Wamp,
     WampType,
+    WampYieldOptions,
 } from "../lib";
 import {detailsObj} from "./common";
 
@@ -97,6 +97,13 @@ test("CALL", t => {
     t.deepEqual(Wamp.parse(raw), call);
 });
 
+test("CALL - normalize empty fields", t => {
+    let call = new Wamp.Call(123, callOptions, "test");
+    t.deepEqual(call.args, []);
+    t.deepEqual(call.kwargs, {});
+    t.deepEqual(call.toRaw(), [WampType.CALL, 123, callOptions, "test"]);
+});
+
 test("INVOCATION", t => {
     let invocation = new Wamp.Invocation(123, 456, invocationOptions, [123], detailsObj);
     t.is(invocation.type, WampType.INVOCATION);
@@ -108,7 +115,12 @@ test("INVOCATION", t => {
     let raw: WampRaw.Invocation = [WampType.INVOCATION, 123, 456, invocationOptions, [123], detailsObj];
     t.deepEqual(invocation.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), invocation);
+});
 
+test("INVOCATION - normalize empty fields", t => {
+    let call = new Wamp.Invocation(123, 456, invocationOptions);
+    t.deepEqual(call.args, []);
+    t.deepEqual(call.kwargs, {});
 });
 
 test("CANCEL", t => {
@@ -145,6 +157,13 @@ test("YIELD", t => {
     t.deepEqual(Wamp.parse(raw), yild);
 });
 
+test("YIELD - normalize empty fields", t => {
+    let call = new Wamp.Yield(123, yieldOptions);
+    t.deepEqual(call.args, []);
+    t.deepEqual(call.kwargs, {});
+    t.deepEqual(call.toRaw(), [WampType.YIELD, 123, yieldOptions]);
+});
+
 test("RESULT", t => {
     let result = new Wamp.Result(123, resultOptions, [123], detailsObj);
     t.is(result.type, WampType.RESULT);
@@ -157,3 +176,19 @@ test("RESULT", t => {
     t.deepEqual(Wamp.parse(raw), result);
 });
 
+test("RESULT - normalize empty fields", t => {
+    let result = new Wamp.Result(123, resultOptions);
+    t.deepEqual(result.args, []);
+    t.deepEqual(result.kwargs, {});
+    t.deepEqual(result.toRaw(), [WampType.RESULT, 123, resultOptions]);
+});
+
+test("RESULT - (empty, full)", t => {
+    let result = new Wamp.Result(123, resultOptions, null, {a: 1});
+    t.deepEqual(result.toRaw(), [WampType.RESULT, 123, resultOptions, [], {a: 1}]);
+});
+
+test("RESULT - (full, empty)", t => {
+    let r2 = new Wamp.Result(123, resultOptions, [1]);
+    t.deepEqual(r2.toRaw(), [WampType.RESULT, 123, resultOptions, [1]]);
+});

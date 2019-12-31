@@ -1,6 +1,6 @@
 {
   "name": "typed-wamp",
-  "version": "0.1.4-pre",
+  "version": "0.1.0",
   "description": "A set of type definitions and convenience classes for working with WAMP messages.",
   "main": "index.js",
   "repository": "https://github.com/GregRos/typed-wamp",
