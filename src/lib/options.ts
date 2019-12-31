@@ -1,7 +1,7 @@
 /**
  * Which features the client supports in its publisher role.
  */
-import {WampAuthMethod} from "./wamp-types";
+import {WampAuthMethod} from "./basic-types";
 
 export interface PublisherFeatures {
     subscriber_blackwhite_listing: boolean;
@@ -124,45 +124,15 @@ export interface BrokerFeatures {
 /**
  * For shared registrations, determines the policy used to pick which registrant gets invoked when a procedure is called.
  */
-export enum InvocationPolicy {
-    /**
-     * Single registration policy.
-     */
-    Single = "single",
+export type InvocationPolicy =
+    "single"
+    | "roundrobin"
+    | "random"
+    | "first"
+    | "last";
 
-    /**
-     *  The callees will be notified using a round-robin policy.
-     */
-    RoundRobin = "roundrobin",
+export type MatchingPolicy = "prefix" | "wildcard";
 
-    /**
-     * A callee will be notified randomly.
-     */
-    Random = "random",
-
-    /**
-     * The first callee to register the procedure will handle it.
-     */
-    First = "first",
-    /**
-     * The last callee to register a procedure will handle it.
-     */
-    Last = "last"
-}
-
-/**
- * For pattern-based subscription and registration, the matching policy used to determine if a given event or procedure name matches the pattern.
- */
-export enum MatchingPolicy {
-    /**
-     * Uses the prefix matching policy.
-     */
-    Prefix = "prefix",
-    /**
-     * Uses the wildcard matching policy.
-     */
-    Wildcard = "wildcard"
-}
 
 /**
  * Protocol options for the PUBLISH message.
@@ -180,12 +150,12 @@ export interface WampPublishOptions {
 
     /**
      * Publication blacklisting. A list of authids to exclude from receiving the event.
-     * @see [Authentication]{@link https://wamp-proto.org/_static/wamp_latest.html#authentication}
+     * @see [Authentication]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#authentication}
      */
     exclude_authid?: string[];
     /**
      * Publication blacklisting. A list of authroles to exclude from receiving the event.
-     * @see [Authentication]{@link https://wamp-proto.org/_static/wamp_latest.html#authentication}
+     * @see [Authentication]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#authentication}
      */
     exclude_authrole?: string[];
 
@@ -237,7 +207,7 @@ export interface WampRegisterOptions {
 
     /**
      * Enables pattern-based registration and sets the matching type.
-     * @see [Shared Registration]{@link https://wamp-proto.org/_static/wamp_latest.html#shared-registration}
+     * @see [Shared Registration]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#shared-registration}
      */
     match?: MatchingPolicy;
 
@@ -260,7 +230,7 @@ export interface WampYieldOptions {
 /**
  * Protocol options for the EVENT message.
  */
-export interface WampEventOptions {
+export interface WampEventDetails {
     /**
      * The session ID of the publisher, if known.
      */
@@ -268,7 +238,7 @@ export interface WampEventOptions {
 
     /**
      * The trust level of the publisher.
-     * @see [Publication Trust Levels]{@link https://wamp-proto.org/_static/wamp_latest.html#call-trust-levels}
+     * @see [Publication Trust Levels]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#call-trust-levels}
      */
     trustlevel?: number;
 
@@ -281,23 +251,12 @@ export interface WampEventOptions {
 
 /**
  * Tells the router how to cancel a call.
- * @see [WAMP Spec - Cancellation]{@link https://wamp-proto.org/_static/wamp_latest.html#feature-definition-2}
+ * @see [WAMP Spec - Cancellation]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#feature-definition-2}
  */
-export enum CancelMode {
-    /**
-     * The router will send an error to the caller, but won't send any message to the callee. The callee's response will be discarded when received.
-     */
-    Skip = "skip",
-    /**
-     * The WAMP router will send a message to the callee and send the callee's response to the caller.
-     */
-    Kill = "kill",
-
-    /**
-     * The WAMP router will send an error to the caller and a cancellation message to the callee. If the callee responds, its response is discarded.
-     */
-    KillNoWait = "killnowait"
-}
+export type CancelMode =
+    "skip"
+    | "kill"
+    | "killnowait"
 
 /**
  * Protocol options for the CANCEL message.
@@ -331,7 +290,7 @@ export interface WampCallOptions {
 /**
  * Protocol options for the RESULT message.
  */
-export interface WampResultOptions {
+export interface WampResultDetails {
     /**
      * Whether this RESULT message is a progress message.
      */
@@ -341,7 +300,7 @@ export interface WampResultOptions {
 /**
  * Protocol options for the INVOCATION message.
  */
-export interface WampInvocationOptions {
+export interface WampInvocationDetails {
     /**
      * Whether the caller accepts progress updates.
      */
@@ -354,7 +313,7 @@ export interface WampInvocationOptions {
 
     /**
      * The caller's trust level.
-     * @see [Call Trust Levels]{@link https://wamp-proto.org/_static/wamp_latest.html#call-trust-levels}
+     * @see [Call Trust Levels]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#call-trust-levels}
      */
     trustlevel?: number;
 

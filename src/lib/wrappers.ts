@@ -3,16 +3,16 @@ import {
     HelloDetails,
     WampCallOptions,
     WampCancelOptions,
-    WampEventOptions,
-    WampInvocationOptions,
+    WampEventDetails,
+    WampInvocationDetails,
     WampPublishOptions,
     WampRegisterOptions,
-    WampResultOptions,
+    WampResultDetails,
     WampSubscribeOptions,
     WampYieldOptions,
     WelcomeDetails
 } from "./options";
-import {WampArray, WampAuthMethod, WampId, WampObject, WampUriString} from "./wamp-types";
+import {WampArray, WampAuthMethod, WampId, WampObject, WampUriString} from "./basic-types";
 import {WampRaw} from "./raw";
 
 /**
@@ -40,12 +40,14 @@ export namespace Wamp {
     export class Call implements WampMessage {
         type = WampType.CALL;
 
-        constructor(public requestId: WampId, public options: WampCallOptions, public procedure: WampUriString, public args ?: WampArray, public kwargs ?: WampObject) {
+        constructor(public reqId: WampId, public options: WampCallOptions, public procedure: WampUriString, public args ?: WampArray, public kwargs ?: WampObject) {
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
             let {args, kwargs} = this;
-            return [this.type, this.requestId, this.options || {}, this.procedure, ...argsKwargsArray(args, kwargs)] as WampRaw.Call;
+            return [this.type, this.reqId, this.options || {}, this.procedure, ...argsKwargsArray(args, kwargs)] as WampRaw.Call;
         }
     }
 
@@ -56,7 +58,8 @@ export namespace Wamp {
         type = WampType.ERROR;
 
         constructor(public errSourceType: WampType, public errSourceId: WampId, public details: WampObject, public error: WampUriString, public args ?: WampArray, public kwargs ?: WampObject) {
-
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
@@ -115,12 +118,13 @@ export namespace Wamp {
     export class Publish implements WampMessage {
         type = WampType.PUBLISH;
 
-        constructor(public requestId: WampId, public options: WampPublishOptions, public topic: WampUriString, public args ?: WampArray, public kwargs ?: WampObject) {
-
+        constructor(public reqId: WampId, public options: WampPublishOptions, public topic: WampUriString, public args ?: WampArray, public kwargs ?: WampObject) {
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
-            return [this.type, this.requestId, this.options, this.topic, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Publish;
+            return [this.type, this.reqId, this.options, this.topic, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Publish;
         }
     }
 
@@ -130,12 +134,12 @@ export namespace Wamp {
     export class Subscribe implements WampMessage {
         type = WampType.SUBSCRIBE;
 
-        constructor(public requestId: WampId, public options: WampSubscribeOptions, public topic: WampUriString) {
+        constructor(public reqId: WampId, public options: WampSubscribeOptions, public topic: WampUriString) {
 
         }
 
         toRaw() {
-            return [this.type, this.requestId, this.options, this.topic] as WampRaw.Subscribe;
+            return [this.type, this.reqId, this.options, this.topic] as WampRaw.Subscribe;
         }
     }
 
@@ -145,12 +149,12 @@ export namespace Wamp {
     export class Unsubscribe implements WampMessage {
         type = WampType.UNSUBSCRIBE;
 
-        constructor(public requestId: WampId, public subscription: WampId) {
+        constructor(public reqId: WampId, public subscriptionId: WampId) {
 
         }
 
         toRaw() {
-            return [this.type, this.requestId, this.subscription] as WampRaw.Unsubscribe;
+            return [this.type, this.reqId, this.subscriptionId] as WampRaw.Unsubscribe;
         }
     }
 
@@ -160,12 +164,12 @@ export namespace Wamp {
     export class Register implements WampMessage {
         type = WampType.REGISTER;
 
-        constructor(public requestId: WampId, public options: WampRegisterOptions, public procedure: WampUriString) {
+        constructor(public reqId: WampId, public options: WampRegisterOptions, public procedure: WampUriString) {
 
         }
 
         toRaw() {
-            return [this.type, this.requestId, this.options, this.procedure] as WampRaw.Register;
+            return [this.type, this.reqId, this.options, this.procedure] as WampRaw.Register;
         }
     }
 
@@ -187,15 +191,15 @@ export namespace Wamp {
     /**
      * A class representing the UNREGISTER message.
      */
-    export class Unregister implements WampMessage{
+    export class Unregister implements WampMessage {
         type = WampType.UNREGISTER;
 
-        constructor(public requestId: WampId, public registration: WampId) {
+        constructor(public reqId: WampId, public registrationId: WampId) {
 
         }
 
         toRaw() {
-            return [this.type, this.requestId, this.registration] as WampRaw.Unregister;
+            return [this.type, this.reqId, this.registrationId] as WampRaw.Unregister;
         }
     }
 
@@ -205,12 +209,13 @@ export namespace Wamp {
     export class Yield implements WampMessage {
         type = WampType.YIELD;
 
-        constructor(public invocationId: WampId, public options: WampYieldOptions, public args ?: WampArray, public kwargs ?: WampObject) {
-
+        constructor(public invocationReqId: WampId, public options: WampYieldOptions, public args ?: WampArray, public kwargs ?: WampObject) {
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
-            return [this.type, this.invocationId, this.options, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Yield;
+            return [this.type, this.invocationReqId, this.options, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Yield;
         }
     }
 
@@ -235,12 +240,12 @@ export namespace Wamp {
     export class Published implements WampMessage {
         type = WampType.PUBLISHED;
 
-        constructor(public publishReqId: WampId, public publicationId: WampId) {
+        constructor(public reqId: WampId, public publicationId: WampId) {
 
         }
 
         toRaw() {
-            return [WampType.PUBLISHED, this.publishReqId, this.publicationId] as WampRaw.Published;
+            return [WampType.PUBLISHED, this.reqId, this.publicationId] as WampRaw.Published;
         }
     }
 
@@ -280,7 +285,7 @@ export namespace Wamp {
     export class Event implements WampMessage {
         type = WampType.EVENT;
 
-        constructor(public subscriptionId: WampId, public publicationId: WampId, public details: WampEventOptions, public args ?: WampArray, public kwargs ?: WampObject) {
+        constructor(public subscriptionId: WampId, public publicationId: WampId, public details: WampEventDetails, public args ?: WampArray, public kwargs ?: WampObject) {
             this.args = this.args || [];
             this.kwargs = this.kwargs || {};
         }
@@ -296,12 +301,13 @@ export namespace Wamp {
     export class Result implements WampMessage {
         type = WampType.RESULT;
 
-        constructor(public callReqId: WampId, public details: WampResultOptions, public args ?: WampArray, public kwargs ?: WampObject) {
-
+        constructor(public reqId: WampId, public details: WampResultDetails, public args ?: WampArray, public kwargs ?: WampObject) {
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
-            return [WampType.RESULT, this.callReqId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Result;
+            return [WampType.RESULT, this.reqId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Result;
         }
     }
 
@@ -341,12 +347,13 @@ export namespace Wamp {
     export class Invocation implements WampMessage {
         type = WampType.INVOCATION;
 
-        constructor(public requestId: WampId, public registrationId: WampId, public options: WampInvocationOptions, public args ?: WampArray, public kwargs ?: WampObject) {
-
+        constructor(public reqId: WampId, public registrationId: WampId, public details: WampInvocationDetails, public args ?: WampArray, public kwargs ?: WampObject) {
+            this.args = this.args || [];
+            this.kwargs = this.kwargs || {};
         }
 
         toRaw() {
-            return [WampType.INVOCATION, this.requestId, this.registrationId, this.options, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Invocation;
+            return [WampType.INVOCATION, this.reqId, this.registrationId, this.details, ...argsKwargsArray(this.args, this.kwargs)] as WampRaw.Invocation;
         }
     }
 
@@ -371,12 +378,12 @@ export namespace Wamp {
     export class Cancel implements WampMessage {
         type = WampType.CANCEL;
 
-        constructor(public callRequestId: WampId, public options: WampCancelOptions) {
+        constructor(public reqId: WampId, public options: WampCancelOptions) {
 
         }
 
         toRaw() {
-            return [this.type, this.callRequestId, this.options] as WampRaw.Cancel;
+            return [this.type, this.reqId, this.options] as WampRaw.Cancel;
         }
     }
 
@@ -386,12 +393,12 @@ export namespace Wamp {
     export class Interrupt implements WampMessage {
         type = WampType.INTERRUPT;
 
-        constructor(public callRequestId: WampId, public options: WampObject) {
+        constructor(public invocationReqId: WampId, public options: WampObject) {
 
         }
 
         toRaw() {
-            return [WampType.INTERRUPT, this.callRequestId, this.options] as WampRaw.Interrupt;
+            return [WampType.INTERRUPT, this.invocationReqId, this.options] as WampRaw.Interrupt;
         }
     }
 
@@ -439,8 +446,68 @@ export namespace Wamp {
         | Unregistered
         | Invocation
         | Yield;
-}
 
+    /**
+     * Parses a raw WAMP message in the form of an array into a message object.
+     * @param raw The raw message.
+     * @see [WAMP Basic Profile]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#message-definitions}
+     * @see [WAMP Advanced Profile]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#message-definitions-0}
+     */
+    export function parse(raw: WampRaw.Any | WampRaw.Unknown): Wamp.Any {
+        switch (raw[0]) {
+            case WampType.WELCOME:
+                return new Wamp.Welcome(raw[1], raw[2]);
+            case WampType.ABORT:
+                return new Wamp.Abort(raw[1] || {}, raw[2]);
+            case WampType.GOODBYE:
+                return new Wamp.Goodbye(raw[1], raw[2]);
+            case WampType.ERROR:
+                return new Wamp.Error(raw[1], raw[2], raw[3] || {}, raw[4], raw[5] || [], raw[6] || {});
+            case WampType.PUBLISHED:
+                return new Wamp.Published(raw[1], raw[2]);
+            case WampType.SUBSCRIBED:
+                return new Wamp.Subscribed(raw[1], raw[2]);
+            case WampType.UNSUBSCRIBED:
+                return new Wamp.Unsubscribed(raw[1]);
+            case WampType.EVENT:
+                return new Wamp.Event(raw[1], raw[2], raw[3] || {}, raw[4] || [], raw[5] || {});
+            case WampType.RESULT:
+                return new Wamp.Result(raw[1], raw[2] || {}, raw[3] || [], raw[4] || {});
+            case WampType.REGISTERED:
+                return new Wamp.Registered(raw[1], raw[2]);
+            case WampType.UNREGISTERED:
+                return new Wamp.Unregistered(raw[1]);
+            case WampType.INVOCATION:
+                return new Wamp.Invocation(raw[1], raw[2], raw[3] || {}, raw[4] || [], raw[5] || {});
+            case WampType.CHALLENGE:
+                return new Wamp.Challenge(raw[1], raw[2] || {});
+            case WampType.INTERRUPT:
+                return new Wamp.Interrupt(raw[1], raw[2] || {});
+            case WampType.SUBSCRIBE:
+                return new Wamp.Subscribe(raw[1], raw[2] || {}, raw[3]);
+            case WampType.UNSUBSCRIBE:
+                return new Wamp.Unsubscribe(raw[1], raw[2]);
+            case WampType.UNREGISTER:
+                return new Wamp.Unregister(raw[1], raw[2]);
+            case WampType.PUBLISH:
+                return new Wamp.Publish(raw[1], raw[2] || {}, raw[3], raw[4] || [], raw[5] || {});
+            case WampType.CALL:
+                return new Wamp.Call(raw[1], raw[2] || {}, raw[3], raw[4] || [], raw[5] || {});
+            case WampType.REGISTER:
+                return new Wamp.Register(raw[1], raw[2] || {}, raw[3]);
+            case WampType.HELLO:
+                return new Wamp.Hello(raw[1], raw[2]);
+            case WampType.YIELD:
+                return new Wamp.Yield(raw[1], raw[2] || {}, raw[3] || [], raw[4] || {});
+            case WampType.AUTHENTICATE:
+                return new Wamp.Authenticate(raw[1], raw[2] || {});
+            case WampType.CANCEL:
+                return new Wamp.Cancel(raw[1], raw[2] || {});
+            default:
+                return new Wamp.Unknown(raw);
+        }
+    }
+}
 
 
 function argsKwargsArray(args: any[], kwargs: any) {

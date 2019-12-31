@@ -17,7 +17,7 @@ export type WampPrimitive = string | number | WampId | WampUriString;
 /**
  * A dictionary that can appear in WAMP messages.
  */
-export type WampObject = any;
+export type WampObject = object;
 /**
  * An array that can appear in WAMP messages.
  */
