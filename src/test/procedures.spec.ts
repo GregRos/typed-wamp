@@ -49,7 +49,7 @@ test("REGISTER", t => {
     t.is(register.procedure, "test");
     t.is(register.reqId, 123);
     t.deepEqual(register.options, regOptions);
-    let raw: WampRaw.Register = [WampType.REGISTER, 123, regOptions, "test"]
+    let raw: WampRaw.Register = [WampType.REGISTER, 123, regOptions, "test"];
     t.deepEqual(register.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), register);
 });
@@ -92,7 +92,7 @@ test("CALL", t => {
     t.deepEqual(call.options, callOptions);
     t.deepEqual(call.args, [123]);
     t.deepEqual(call.kwargs, detailsObj);
-    let raw: WampRaw.Call = [WampType.CALL, 123, callOptions, "test", [123], detailsObj]
+    let raw: WampRaw.Call = [WampType.CALL, 123, callOptions, "test", [123], detailsObj];
     t.deepEqual(call.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), call);
 });
@@ -152,7 +152,7 @@ test("YIELD", t => {
     t.deepEqual(yild.options, yieldOptions);
     t.deepEqual(yild.args, [123]);
     t.deepEqual(yild.kwargs, detailsObj);
-    let raw: WampRaw.Yield = [WampType.YIELD, 123, yieldOptions, [123], detailsObj]
+    let raw: WampRaw.Yield = [WampType.YIELD, 123, yieldOptions, [123], detailsObj];
     t.deepEqual(yild.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), yild);
 });

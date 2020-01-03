@@ -1,3 +1,5 @@
+/** @module typed-wamp */ /** */
+
 /**
  * String describing the WAMP authentication method.
  */

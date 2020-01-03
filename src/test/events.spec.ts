@@ -102,7 +102,7 @@ test("EVENT", t => {
 });
 
 test("EVENT - falsy args/kwargs", t => {
-    let publish = new Wamp.Event(123, 456, eventDetails)
+    let publish = new Wamp.Event(123, 456, eventDetails);
     t.deepEqual(publish.args, []);
     t.deepEqual(publish.kwargs, {});
 });

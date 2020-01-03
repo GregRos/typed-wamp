@@ -1,3 +1,5 @@
+/** @module typed-wamp */ /** */
+
 /**
  * The message type IDs for all messages in the WAMP protocol specification.
  * @see [Basic Profile]{@link https://wamp-proto.org/_static/gen/wamp_latest.html#message-codes-and-direction}

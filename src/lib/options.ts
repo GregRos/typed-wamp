@@ -1,8 +1,13 @@
+/** @module typed-wamp */ /** */
+
 /**
  * Which features the client supports in its publisher role.
  */
 import {WampAuthMethod} from "./basic-types";
 
+/**
+ * Part of HELLO. Which features the client supports in its publisher role.
+ */
 export interface PublisherFeatures {
     subscriber_blackwhite_listing: boolean;
     publisher_exclusion: boolean;
@@ -11,7 +16,7 @@ export interface PublisherFeatures {
 }
 
 /**
- * Which features the client supports in its subscriber role.
+ * Part of HELLO. Which features the client supports in its subscriber role.
  */
 export interface SubscriberFeatures {
     pattern_based_subscription: boolean;
@@ -22,7 +27,7 @@ export interface SubscriberFeatures {
 }
 
 /**
- * Which features the client supports in its caller role.
+ * Part of HELLO. Which features the client supports in its caller role.
  */
 export interface CallerFeatures {
     progressive_call_results: boolean;
@@ -33,7 +38,7 @@ export interface CallerFeatures {
 }
 
 /**
- * Which features the client supports in its callee role.
+ * Part of HELLO. Which features the client supports in its callee role.
  */
 export interface CalleeFeatures {
     progressive_call_results: boolean;
@@ -122,7 +127,7 @@ export interface BrokerFeatures {
 }
 
 /**
- * For shared registrations, determines the policy used to pick which registrant gets invoked when a procedure is called.
+ * Recognized invocation policies for multiple registration.
  */
 export type InvocationPolicy =
     "single"
@@ -131,8 +136,10 @@ export type InvocationPolicy =
     | "first"
     | "last";
 
+/**
+ * Recognized matching policies for wildcard registration and subscription.
+ */
 export type MatchingPolicy = "prefix" | "wildcard";
-
 
 /**
  * Protocol options for the PUBLISH message.
@@ -256,7 +263,7 @@ export interface WampEventDetails {
 export type CancelMode =
     "skip"
     | "kill"
-    | "killnowait"
+    | "killnowait";
 
 /**
  * Protocol options for the CANCEL message.

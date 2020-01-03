@@ -1,5 +1,5 @@
 import test from "ava";
-import {WampType, HelloDetails, WelcomeDetails, WampRaw, Wamp} from "../lib"
+import {WampType, HelloDetails, WelcomeDetails, WampRaw, Wamp} from "../lib";
 import {detailsObj, detailsObj2} from "./common";
 
 const helloDetails: HelloDetails = {
@@ -78,7 +78,7 @@ test("CHALLENGE", t => {
     t.is(challenge.type, WampType.CHALLENGE);
     t.is(challenge.authMethod, "auth");
     t.is(challenge.extra, detailsObj);
-    let raw: WampRaw.Challenge = [WampType.CHALLENGE, "auth", detailsObj]
+    let raw: WampRaw.Challenge = [WampType.CHALLENGE, "auth", detailsObj];
     t.deepEqual(challenge.toRaw(), raw);
     t.deepEqual(Wamp.parse(raw), challenge);
 });
@@ -103,5 +103,5 @@ test("ERROR - normalize empty", t => {
     let err = new Wamp.Error(WampType.SUBSCRIBE, 123, detailsObj, "test");
     t.deepEqual(err.args, []);
     t.deepEqual(err.kwargs, {});
-    t.deepEqual(err.toRaw(), [WampType.ERROR, WampType.SUBSCRIBE, 123, detailsObj, "test");
+    t.deepEqual(err.toRaw(), [WampType.ERROR, WampType.SUBSCRIBE, 123, detailsObj, "test"]);
 });

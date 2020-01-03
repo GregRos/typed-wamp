@@ -1,59 +1,63 @@
 {
-  "name": "typed-wamp",
-  "version": "0.1.0",
-  "description": "A set of type definitions and convenience classes for working with WAMP messages.",
-  "main": "index.js",
-  "repository": "https://github.com/GregRos/typed-wamp",
-  "author": "GregRos",
-  "license": "MIT",
-  "typings": "index",
-  "dependencies": {
-  },
-  "keywords": [
-	"wamp",
-	"typescript"
-  ],
-  "scripts": {
-	"test": "nyc node_modules/ava/cli.js",
-	"build": "rm -rf dist/ && tsc",
-	"lint": "tslint -p . --fix; (cd src/front && tslint -p . --fix)",
-	"do-publish": "yarn run build && node dist/publish.js && (cd .tmp/publish; yarn publish)"
-  },
-  "devDependencies": {
-	"@types/lodash": "^4.14.148",
-	"@types/shelljs": "^0.8.6",
-	"ava": "^2.4.0",
-	"nyc": "^14.1.1",
-	"retarget-sourcemaps-after-move": "^0.1.1",
-	"shelljs": "^0.8.3",
-	"source-map-support": "^0.5.16",
-	"tslint": "^5.20.1",
-	"tslint-config-gregros": "^1.2.1",
-	"typescript": "^3.7.2"
-  },
-  "ava": {
-	"files": [
-	  "dist/test/**/*.spec.js"
+	"name": "typed-wamp",
+	"version": "0.1.0",
+	"description": "A set of type definitions and convenience classes for working with WAMP messages.",
+	"main": "index.js",
+	"repository": "https://github.com/GregRos/typed-wamp",
+	"author": "GregRos",
+	"license": "MIT",
+	"typings": "index",
+	"dependencies": {},
+	"keywords": [
+		"wamp",
+		"typescript"
 	],
-	"verbose": true
-  },
-  "browserslist": [
-	"last 1 Chrome versions"
-  ],
-  "nyc": {
-	"include": [
-	  "dist/lib/**/*.js",
-	  "src/lib/**/*.ts"
+	"scripts": {
+		"test": "nyc node_modules/ava/cli.js",
+		"build": "rm -rf dist/ && tsc",
+		"lint": "tslint -p . --fix; (cd src/front && tslint -p . --fix)",
+		"do-publish": "yarn run build && node dist/publish.js && (cd .tmp/publish; yarn publish)",
+	  	"docs": "node dist/generate-docs/run.js"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.148",
+		"@types/shelljs": "^0.8.6",
+		"ava": "^2.4.0",
+		"globby": "^10.0.1",
+		"nyc": "^14.1.1",
+		"retarget-sourcemaps-after-move": "^0.1.1",
+		"shelljs": "^0.8.3",
+		"source-map-support": "^0.5.16",
+		"tslint": "^5.20.1",
+		"tslint-config-gregros": "^1.2.1",
+		"typedoc": "^0.15.6",
+		"typedoc-plugin-example-tag": "^1.0.2",
+		"typedoc-plugin-external-module-name": "^2.1.0",
+		"typedoc-plugin-internal-external": "^2.0.2",
+		"typescript": "^3.7.2"
+	},
+	"ava": {
+		"files": [
+			"dist/test/**/*.spec.js"
+		],
+		"verbose": true
+	},
+	"browserslist": [
+		"last 1 Chrome versions"
 	],
-	"reporter": [
-	  "lcov",
-	  "text-summary"
-	],
-	"sourceMap": true,
-	"extension": [
-	  ".ts"
-	]
-  },
-  "sideEffects": false
-
+	"nyc": {
+		"include": [
+			"dist/lib/**/*.js",
+			"src/lib/**/*.ts"
+		],
+		"reporter": [
+			"lcov",
+			"text-summary"
+		],
+		"sourceMap": true,
+		"extension": [
+			".ts"
+		]
+	},
+	"sideEffects": false
 }
