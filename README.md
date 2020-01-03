@@ -1,5 +1,7 @@
 # typed-wamp
 
+[![Build Status](https://travis-ci.org/GregRos/typed-wamp.svg?branch=master)](https://travis-ci.org/GregRos/typed-wamp)[![codecov](https://codecov.io/gh/GregRos/typed-wamp/branch/master/graph/badge.svg)](https://codecov.io/gh/GregRos/typed-wamp)[![npm version](https://badge.fury.io/js/typed-wamp.svg)](https://badge.fury.io/js/typed-wamp)
+
 This is a package that provides accurate TypeScript type definitions and basic message wrappers for the WAMP protocol.
 
 This package doesn't do much by itself. It lets other code, like client and router implementations, use a uniform set of typed and wrappers for working with the WAMP protocol.
