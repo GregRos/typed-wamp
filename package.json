@@ -1,6 +1,6 @@
 {
   "name": "typed-wamp",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A set of type definitions and convenience classes for working with WAMP messages.",
   "main": "index.js",
   "repository": "https://github.com/GregRos/typed-wamp",
@@ -13,13 +13,13 @@
     "typescript"
   ],
   "scripts": {
-    "test": "nyc node_modules/ava/cli.js",
-    "build:clean": "rm -rf dist/",
     "build": "tsc",
-    "build:fresh": "npm-run-all build:clean build",
+    "clean": "rm -rf dist/; rm -rf .tmp/",
+    "build:clean": "npm-run-all clean build",
+    "test": "nyc ava",
     "lint": "tslint -p .",
     "lint:fix": "tslint -p . --fix",
-    "package:publish": "yarn run lint && yarn run build && yarn run test && node dist/publish.js && yarn publish .tmp/publish",
+    "package:publish": "npm-run-all lint build:clean test && node dist/publish.js && (cd .tmp/publish; yarn publish)",
     "docs": "node dist/generate-docs/run.js"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "shelljs": "^0.8.3",
     "source-map-support": "^0.5.16",
     "tslint": "^5.20.1",
-    "tslint-config-gregros": "^1.2.1",
+    "tslint-config-gregros": "^1.3.0",
     "typedoc": "^0.15.6",
     "typedoc-plugin-example-tag": "^1.0.2",
     "typedoc-plugin-external-module-name": "^2.1.0",
