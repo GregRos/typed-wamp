@@ -3,22 +3,22 @@
     "module": "commonjs",
     "target": "es6",
     "noImplicitAny": false,
-	"sourceMap": true,
+    "sourceMap": true,
     "allowUnreachableCode": true,
-	"experimentalDecorators": true,
-	"lib": [
+    "experimentalDecorators": true,
+    "lib": [
       "es6",
       "es2016.array.include",
       "dom"
     ],
     "declaration": true,
     "outDir": "dist",
-	"allowSyntheticDefaultImports": true,
-	"esModuleInterop": true,
-	"moduleResolution": "node"
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   },
   "include": [
-	"src/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "dist",

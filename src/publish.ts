@@ -1,5 +1,6 @@
 import {retargetSourcemaps} from "retarget-sourcemaps-after-move";
 import {rm, mkdir, cp} from "shelljs";
+
 function run() {
     let pub = ".tmp/publish";
     let srcRoot = "src/lib";
@@ -24,4 +25,5 @@ function run() {
         distGlob: "**/*.js"
     });
 }
+
 run();

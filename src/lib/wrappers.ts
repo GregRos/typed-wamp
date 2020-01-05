@@ -35,7 +35,7 @@ export namespace Wamp {
          */
         toRaw(): WampRaw.Any;
     }
-    
+
     /**
      * A class representing the CALL message.
      */
