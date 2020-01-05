@@ -15,7 +15,8 @@
   "scripts": {
     "test": "nyc node_modules/ava/cli.js",
     "build:clean": "rm -rf dist/",
-    "build": "yarn run build:clean && tsc",
+    "build": "tsc",
+    "build:fresh": "npm-run-all build:clean build",
     "lint": "tslint -p .",
     "lint:fix": "tslint -p . --fix",
     "package:publish": "yarn run lint && yarn run build && yarn run test && node dist/publish.js && yarn publish .tmp/publish",
