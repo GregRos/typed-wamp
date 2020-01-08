@@ -14,12 +14,12 @@
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf dist/; rm -rf .tmp/",
+    "clean": "rm -rf dist/",
     "build:clean": "npm-run-all clean build",
     "test": "nyc ava",
     "lint": "tslint -p .",
     "lint:fix": "tslint -p . --fix",
-    "package:publish": "npm-run-all lint build:clean test && node dist/publish.js && (cd .tmp/publish; yarn publish)",
+    "package:publish": "npm-run-all lint build:clean test && node dist/publish.js && (cd .publish; yarn publish)",
     "docs": "node dist/generate-docs/run.js"
   },
   "devDependencies": {
