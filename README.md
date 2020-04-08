@@ -93,3 +93,7 @@ let helloDetails: HelloDetails = {
     // ...
 };
 ```
+
+## Limitations
+
+This package intentionally doesn't address any specific authentication method, so it doesn't include specific wrappers for `wampcra` authentication (except for wrappers and types describing general `Challenge` and `Authenticate` messages). 

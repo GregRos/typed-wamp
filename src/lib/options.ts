@@ -62,6 +62,7 @@ export interface HelloDetails {
     authmethods?: WampAuthMethod[];
     authid?: string;
     authrole?: string;
+    authextra?: object;
     roles: {
         publisher?: {
             features?: Partial<PublisherFeatures>
@@ -83,6 +84,10 @@ export interface HelloDetails {
  */
 export interface WelcomeDetails {
     agent?: string;
+    authid?: string;
+    authrole?: string;
+    authmethod?: string;
+    authprovider?: string;
     roles: {
         broker?: {
             features?: Partial<BrokerFeatures>;
